@@ -13,7 +13,7 @@ int x=0;
 int filtro;
 int Nfiltro=3;
 float aux;
-float escala=10;
+float escala;
 int w, h;
 PImage menor;
 
@@ -23,7 +23,7 @@ void setup() {
   cam = new KetaiCamera(this, width, height, 30);
   fullScreen();
   aux=height*0.25;
-
+  escala=10;
   
   filtro = constrain(filtro, 0, Nfiltro);
   orientation(LANDSCAPE);
@@ -33,13 +33,9 @@ void setup() {
 
   cam.setSaveDirectory("");
   cam.setPhotoSize(width, height);
-<<<<<<< Updated upstream
-=======
   
   w = (int)(width/escala);
   h = (int)(height/escala);
-
->>>>>>> Stashed changes
 }
 
 void onCameraPreviewEvent() {//Ve se existe um novo frame a ser carregado
@@ -69,27 +65,20 @@ void pontilismo() {//Cria varios circulos preenchidas com as cores dos pixels co
 void quadrados() {//Aplica um filtro(tint) de preto e branco
   //image(cam, 0, 0, width, height);  
   //filter(GRAY);
-  menor = createImage((int)(cam.width/escala), (int)(cam.height/escala), RGB);
-  menor.copy(cam, 0, 0, cam.width, cam.height, 0, 0, w, h);
-  menor.loadPixels();
-  w = (int)(width/escala);
-  h = (int)(height/escala);
 
-  if (x < w) {
  //for(int x = 0; x < w; x++){
-    for (int y = 0; y < h; y++) {
-      int i = x + y * w;
+    for (int y = 0; y < height; y++) {
+      int i = x + (y * w);
       color c = menor.pixels[i];
       noStroke();
-      fill(c);
-      
-      rect(x*escala, y*escala, escala, escala);
+      image(cam, x*escala, y*escala, escala, escala);
+      tint(c);
     }
   //}
-    
-    ++x;
-  } else {
+  ++x;
+  if(x > height) {
     x=0;
+    noLoop();
   }
   
 }
@@ -137,7 +126,7 @@ void mousePressed() {
   } else {
     if (mouseX > width-aux*1.5 && mouseX < width-aux*0.5){//Na mesma altura do circulo
       if (mouseY > (height/2)-(aux/2) && mouseY < (height/2)+(aux/2)) {//clique no circulo
-
+          println("INICIOU A CAMERA!!");
           if (cam.isStarted()) {
             cam.pause();
           } else {
