@@ -33,11 +33,23 @@ void setup() {
 
   cam.setSaveDirectory("");
   cam.setPhotoSize(width, height);
+<<<<<<< Updated upstream
+=======
+  
+  w = (int)(width/escala);
+  h = (int)(height/escala);
+
+>>>>>>> Stashed changes
 }
 
 void onCameraPreviewEvent() {//Ve se existe um novo frame a ser carregado
   cam.read();
   cam.autoSettings();
+}
+
+void pretoBranco() {//Aplica um filtro(tint) de preto e branco
+  image(cam, 0, 0, width, height);  
+  filter(GRAY);
 }
 
 void pontilismo() {//Cria varios circulos preenchidas com as cores dos pixels correspondentes
@@ -94,7 +106,7 @@ void mosaico() {//Cria varios pixels preenchidas com as mesma imagem aplicado o 
   if (x < w) {
  //for(int x = 0; x < w; x++){
     for (int y = 0; y < h; y++) {
-      int i = x + y * w;
+      int i = x + (y * w);
       color c = menor.pixels[i];
       noStroke();
       image(cam, x*escala, y*escala, escala, escala);
